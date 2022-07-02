@@ -11,9 +11,14 @@ const cors = require("cors");
 
 db();
 
+const authorization = require("./router/middleware/authorization");
+const login = require("./router/login");
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+app.use("/auth", login);
 
 app.use((req, res, next) => {
   const err = new Error("Not Found");
