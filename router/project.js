@@ -11,6 +11,10 @@ router.get("/:id/projects", async (req, res, next) => {
   try {
     const projects = await Project.find({ uid }).lean();
 
+    if (!projects) {
+      return next({ status: 400, message: "Bad Request" });
+    }
+
     res.json(projects);
   } catch (err) {
     next(err);
@@ -40,6 +44,10 @@ router.get("/:id/projects/:project/testlists", async (req, res, next) => {
   try {
     const testLists = await Test.find({ projectId }).lean();
 
+    if (!testLists) {
+      return next({ status: 400, message: "Bad Request"});
+    }
+
     res.json(testLists);
   } catch (err) {
     next(err);
@@ -56,16 +64,19 @@ router.post("/:id/projects/:project/testlists", async (req, res, next) => {
     newTest = await new Test({
       uniqId,
       projectId,
-      visitedIp: [],
+      visitedIds: [],
       visitCount: 0,
       revisitCount: 0,
       clickEvent: [],
       url,
     }).save();
 
-    await Project.findByIdAndUpdate(projectId, {
-      $push: { testIds: newTest._id },
-    });
+    await Project.findByIdAndUpdate(
+      projectId,
+      {
+        $push: { testIds: newTest._id },
+      },
+    );
 
     res.json({ message: "Success" });
   } catch (err) {
