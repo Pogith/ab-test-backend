@@ -3,23 +3,40 @@ const app = express();
 const dotenv = require("dotenv");
 const http = require("http");
 const server = http.createServer(app);
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const useragent = require("express-useragent");
 
 dotenv.config();
 
 const db = require("./db/db");
-const cors = require("cors");
 
 db();
 
 const authorization = require("./router/middleware/authorization");
 const login = require("./router/login");
 const project = require("./router/project");
+const test = require("./router/test");
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(useragent.express());
+
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 app.use("/auth", login);
+app.use("/api", test);
 app.use("/users", authorization, project);
 
 app.use((req, res, next) => {
