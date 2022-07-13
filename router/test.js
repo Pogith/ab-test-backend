@@ -37,7 +37,6 @@ router.get("/test-page/ab-test", (req, res, next) => {
 });
 
 router.post("/test-page/:uniqid", async (req, res, next) => {
-  const ip = req.query.ip;
   const event = JSON.parse(req.query.event);
   const uniqId = req.params.uniqid;
   const useragent = {
@@ -45,6 +44,7 @@ router.post("/test-page/:uniqid", async (req, res, next) => {
     desktop: req.useragent.isDesktop,
     browser: req.useragent.browser,
   };
+
   const visitedPageIdAndVisitedId = req.cookies[uniqId];
 
   let visitedPageId;
@@ -57,7 +57,6 @@ router.post("/test-page/:uniqid", async (req, res, next) => {
 
   try {
     const test = await Test.findOne({ uniqId }).lean();
-
     if (!test) {
       return next({ status: 400, message: "Bad Request"});
     }
@@ -76,20 +75,12 @@ router.post("/test-page/:uniqid", async (req, res, next) => {
             },
           );
 
-          await Visit.findOneAndUpdate(
-            visitedId,
-            {
-              $set: { visited_at: new Date() },
-            },
-          );
-
           return res.json({ message: "RevisitData is successfully saved"});
         }
       }
 
       const visitData = await new Visit({
         uniqId,
-        ip,
         visited_at: new Date(),
         left_at: "",
         useragent,
@@ -135,7 +126,6 @@ router.post("/test-page/:uniqid", async (req, res, next) => {
         return res.json({ message: "unload is successfully saved"});
       }
     }
-
   } catch (err) {
     next(err);
   }
