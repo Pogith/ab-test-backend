@@ -6,28 +6,19 @@ window.addEventListener("DOMContentLoaded", async () => {
     url,
   };
 
-  const ip = await fetch("https://api.ipify.org?format=json", {
-    method: "GET",
-  })
-    .then((response) => response.json())
-    .then((response) => response.ip)
-    .catch((err) => console.error("Error", err));
-
-  console.log("connected and start");
-
   fetch(
-    `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(connectEvent)}&ip=${ip}`,
+    `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(connectEvent)}`,
     {
       method: "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       credentials: "include",
       mode: "no-cors"
     }
   )
-    .then((res) => console.log("receive response!"))
+    .then(() => console.log("receive response!"))
     .catch((err) => console.error("Connect Error", err));
 
   document.body.addEventListener("click", (event) => {
@@ -37,14 +28,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       y: event.pageY,
     };
 
-    console.log("send click event");
-
     fetch(
-      `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(clickEvent)}&ip=${ip}`,
+      `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(clickEvent)}`,
       {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         credentials: "include",
@@ -62,14 +51,12 @@ if (window.navigator.userAgent.indexOf("Firefox") > -1) {
       name: "unload",
     };
 
-    console.log("Firefox is unloaded");
-
     fetch(
       `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(event)}`,
       {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         credentials: "include",
@@ -83,17 +70,18 @@ if (window.navigator.userAgent.indexOf("Firefox") > -1) {
 
 if (window.navigator.userAgent.indexOf("Chrome") > -1) {
   window.onbeforeunload = (e) => {
+    e.preventDefault();
+
     const event = {
       name: "unload",
     };
-
-    console.log("Chrome is unloaded");
 
     fetch(
       `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(event)}`,
       {
         method: "POST",
         headers: {
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         credentials: "include",
@@ -105,4 +93,4 @@ if (window.navigator.userAgent.indexOf("Chrome") > -1) {
   };
 }
 
-const key = "1o2w0e507l5asrx57";
+const key = "1o2w0enm1l5ifuuqr";
