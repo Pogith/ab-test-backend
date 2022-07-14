@@ -7,7 +7,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   };
 
   fetch(
-    `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(connectEvent)}`,
+    `https://abtest.click/api/test-page/${key}?event=${JSON.stringify(connectEvent)}`,
     {
       method: "POST",
       headers: {
@@ -29,7 +29,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     };
 
     fetch(
-      `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(clickEvent)}`,
+      `https://abtest.click/api/test-page/${key}?event=${JSON.stringify(clickEvent)}`,
       {
         method: "POST",
         headers: {
@@ -52,7 +52,7 @@ if (window.navigator.userAgent.indexOf("Firefox") > -1) {
     };
 
     fetch(
-      `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(event)}`,
+      `https://abtest.click/api/test-page/${key}?event=${JSON.stringify(event)}`,
       {
         method: "POST",
         headers: {
@@ -77,7 +77,7 @@ if (window.navigator.userAgent.indexOf("Chrome") > -1) {
     };
 
     fetch(
-      `http://localhost:8080/api/test-page/${key}?event=${JSON.stringify(event)}`,
+      `https://abtest.click/api/test-page/${key}?event=${JSON.stringify(event)}`,
       {
         method: "POST",
         headers: {
