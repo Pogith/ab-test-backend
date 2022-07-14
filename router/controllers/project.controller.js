@@ -197,7 +197,7 @@ exports.getScreenshot = async (req, res, next) => {
       return next({ status: 400, message: "There is no test"});
     }
 
-    const coordinateXandY = test.clickEvent.map((e) => [e.x - 6, e.y + 20]);
+    const coordinateXandY = test.clickEvent.map((e) => [e.x, e.y]);
     const clickData = "const dataset = " + JSON.stringify(coordinateXandY);
     const { data } = await axios.get(test.url);
     const $ = cheerio.load(data);
