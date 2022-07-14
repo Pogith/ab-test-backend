@@ -97,7 +97,7 @@ exports.saveTestPageData = async (req, res, next) => {
 
       const newUniqIdAndVisitedId = `${uniqId}&${visitData._id}`;
 
-      res.setHeader("Set-Cookie", `${uniqId}=${String(newUniqIdAndVisitedId)}; Max-Age=${60 * 60 * 24 * 7}`);
+      res.setHeader("Set-Cookie", `${uniqId}=${String(newUniqIdAndVisitedId)}; SameSite=None; Secure; Max-Age=${60 * 60 * 24 * 7}`);
 
       return res.json({ message: "connectEvent is successfully saved"});
     }
