@@ -57,7 +57,7 @@ exports.saveTestPageData = async (req, res, next) => {
     const test = await Test.findOne({ uniqId }).lean();
 
     if (!test) {
-      return next({ status: 400, message: "There is no test"});
+      return next({ status: 400, message: "There is no test" });
     }
 
     if (event.name === "connect") {
@@ -74,7 +74,7 @@ exports.saveTestPageData = async (req, res, next) => {
             },
           );
 
-          return res.json({ message: "RevisitData is successfully saved"});
+          return res.json({ message: "RevisitData is successfully saved" });
         }
       }
 
@@ -99,7 +99,7 @@ exports.saveTestPageData = async (req, res, next) => {
 
       res.setHeader("Set-Cookie", `${uniqId}=${String(newUniqIdAndVisitedId)}; SameSite=None; Secure; Max-Age=${60 * 60 * 24 * 7}`);
 
-      return res.json({ message: "connectEvent is successfully saved"});
+      return res.json({ message: "connectEvent is successfully saved" });
     }
 
     if (event.name === "click") {
@@ -110,7 +110,7 @@ exports.saveTestPageData = async (req, res, next) => {
         },
       );
 
-      return res.json({ message: "clickEvent is successfully saved"});
+      return res.json({ message: "clickEvent is successfully saved" });
     }
 
     if (event.name === "unload") {
@@ -122,7 +122,7 @@ exports.saveTestPageData = async (req, res, next) => {
           },
         );
 
-        return res.json({ message: "unload is successfully saved"});
+        return res.json({ message: "unload is successfully saved" });
       }
     }
   } catch (err) {
