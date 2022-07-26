@@ -185,7 +185,6 @@ exports.getAllResults = async (req, res, next) => {
   }
 };
 
-
 exports.getScreenshot = async (req, res, next) => {
   const { uniqid } = req.params;
   const script = fs.readFileSync("./clickPoint.js", "utf-8");
