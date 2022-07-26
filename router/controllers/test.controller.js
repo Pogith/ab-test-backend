@@ -43,14 +43,14 @@ exports.saveTestPageData = async (req, res, next) => {
     browser: req.useragent.browser,
   };
 
-  const visitedPageIdAndVisitedId = req.cookies[uniqId];
+  const userVisitedUniqIdAndVisitedDataId = req.cookies[uniqId];
 
-  let visitedPageId;
-  let visitedId;
+  let userVisitedUniqId;
+  let visitedDataId;
 
-  if (visitedPageIdAndVisitedId) {
-    visitedPageId = visitedPageIdAndVisitedId.split("&")[0];
-    visitedId = visitedPageIdAndVisitedId.split("&")[1];
+  if (userVisitedUniqIdAndVisitedDataId) {
+    userVisitedUniqId = userVisitedUniqIdAndVisitedDataId.split("&")[0];
+    visitedDataId = userVisitedUniqIdAndVisitedDataId.split("&")[1];
   }
 
   try {
@@ -61,8 +61,8 @@ exports.saveTestPageData = async (req, res, next) => {
     }
 
     if (event.name === "connect") {
-      if (visitedPageId && visitedPageId === uniqId) {
-        const filteredIds = test.visitedIds.filter((id) => id === visitedId);
+      if (userVisitedUniqId && userVisitedUniqId === uniqId) {
+        const filteredIds = test.visitedIds.filter((id) => id === visitedDataId);
 
         if (filteredIds) {
           let revisitCount = test.revisitCount + 1;
@@ -114,9 +114,9 @@ exports.saveTestPageData = async (req, res, next) => {
     }
 
     if (event.name === "unload") {
-      if (visitedId) {
+      if (visitedDataId) {
         await Visit.findByIdAndUpdate(
-          visitedId,
+          visitedDataId,
           {
             $set: { left_at: new Date() },
           },
