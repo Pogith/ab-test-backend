@@ -26,10 +26,10 @@ describe("User Model", function () {
   });
 
   describe("User models test", () => {
-    it("should be email", function (done) {
+    it("should be email", (done) => {
       const user = new User();
 
-      user.validate(function (err) {
+      user.validate((err) => {
         expect(err.errors.email).to.exist;
         done();
       });
@@ -38,7 +38,7 @@ describe("User Model", function () {
     it("should be uid", (done) => {
       const user = new User();
 
-      user.validate(function (err) {
+      user.validate((err) => {
         expect(err.errors.uid).to.exist;
         done();
       });
