@@ -29,8 +29,6 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     await postRequestData(connectEventUrl);
-
-    console.log("Connect success");
   } catch (err) {
     console.error("Connect Error", err);
   }
@@ -38,16 +36,14 @@ window.addEventListener("DOMContentLoaded", async () => {
   document.addEventListener("click", async (e) => {
     const clickEvent = {
       name: "click",
-      x: e.pageX,
-      y: e.pageY,
+      x: (e.pageX / document.body.scrollWidth * 100),
+      y: (e.pageY / document.body.scrollHeight * 100),
     };
 
     const clickEventUrl = `https://abtest.click/api/test-page/${key}?event=${JSON.stringify(clickEvent)}`;
 
     try {
       await postRequestData(clickEventUrl);
-
-      console.log("Click success");
     } catch (error) {
       console.error("Click Error", error);
     }
@@ -63,8 +59,6 @@ if (window.navigator.userAgent.indexOf("Firefox") > -1) {
 
     try {
       await postRequestData(unloadEventUrl);
-
-      console.log("Unload success");
     } catch (err) {
       console.error("Unload Error", err);
     }
@@ -82,8 +76,6 @@ if (window.navigator.userAgent.indexOf("Chrome") > -1) {
 
     try {
       await postRequestData(unloadEventUrl);
-
-      console.log("Unload success");
     } catch (err) {
       console.error("Unload Error", err);
     }
