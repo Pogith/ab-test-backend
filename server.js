@@ -17,6 +17,7 @@ const authorization = require("./router/middleware/authorization");
 const login = require("./router/login");
 const project = require("./router/project");
 const test = require("./router/test");
+const index = require("./router/index");
 
 app.use(cookieParser());
 app.use(express.json());
@@ -25,9 +26,13 @@ app.use(useragent.express());
 
 app.use(cors());
 
+app.use("/", index);
 app.use("/auth", login);
 app.use("/api", test);
 app.use("/users", authorization, project);
+
+// for unit test
+// app.use("/users", project);
 
 app.use((req, res, next) => {
   const err = new Error("Not Found");
@@ -50,3 +55,6 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 8080;
 
 server.listen(port, () => console.log("server is up and running"));
+
+// for unit test
+module.exports = app;
