@@ -6,7 +6,9 @@ const Visit = require("../../models/Visit");
 exports.getSourcefile = (req, res, next) => {
   const scriptKey = req.query.key;
 
-  fs.unlinkSync("./source/visitorSource.js");
+  fs.unlinkSync("./source/visitorSource.js", (err) => {
+    if (err) next(err);
+  });
 
   const readStream = fs.createReadStream("./source/source.js");
   const writeStream = fs.createWriteStream("./source/visitorSource.js");
@@ -97,7 +99,7 @@ exports.saveTestPageData = async (req, res, next) => {
 
       const newUniqIdAndVisitedId = `${uniqId}&${visitData._id}`;
 
-      res.setHeader("Set-Cookie", `${uniqId}=${String(newUniqIdAndVisitedId)}; SameSite=None; Secure; Max-Age=${60 * 60 * 24 * 7}`);
+      res.setHeader("Set-Cookie", `${uniqId}=${String(newUniqIdAndVisitedId)}; SameSite=None; Secure; Max-Age=${60 * 60 * 24}`);
 
       return res.json({ message: "connectEvent is successfully saved" });
     }

@@ -2,6 +2,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const fs = require("fs");
 const uniqid = require("uniqid");
+const path = require("path");
 
 const Project = require("../../models/Project");
 const Test = require("../../models/Test");
@@ -187,7 +188,7 @@ exports.getAllResults = async (req, res, next) => {
 
 exports.getScreenshot = async (req, res, next) => {
   const { uniqid } = req.params;
-  const script = fs.readFileSync("./clickPoint.js", "utf-8");
+  const script = fs.readFileSync(path.join("./source", "/clickPoint.js"), "utf-8");
 
   try {
     const test = await Test.findOne({ uniqId: uniqid }).lean();

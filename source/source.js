@@ -50,8 +50,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   });
 });
 
-if (window.navigator.userAgent.indexOf("Firefox") > -1) {
-  window.onunload = async () => {
+if (window.navigator.userAgent.indexOf("Chrome") > -1) {
+  window.onbeforeunload = async (e) => {
+    e.preventDefault();
+
     const unloadEvent = {
       name: "unload",
     };
@@ -63,12 +65,8 @@ if (window.navigator.userAgent.indexOf("Firefox") > -1) {
       console.error("Unload Error", err);
     }
   };
-}
-
-if (window.navigator.userAgent.indexOf("Chrome") > -1) {
-  window.onbeforeunload = async (e) => {
-    e.preventDefault();
-
+} else {
+  window.onunload = async () => {
     const unloadEvent = {
       name: "unload",
     };
